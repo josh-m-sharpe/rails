@@ -768,7 +768,7 @@ module ActiveRecord
           if !parent_reflection.is_a?(HasAndBelongsToManyReflection) &&
              !(klass.reflections.key?(options[:through].to_s) ||
                klass.reflections.key?(options[:through].to_s.pluralize)) &&
-             active_record.type_for_attribute(active_record.primary_key).type != :integer
+              ![:integer, :uuid].include?(active_record.type_for_attribute(active_record.primary_key).type)
             raise NotImplementedError, <<~MSG.squish
               In order to correctly type cast #{active_record}.#{active_record.primary_key},
               #{klass} needs to define a :#{options[:through]} association.
